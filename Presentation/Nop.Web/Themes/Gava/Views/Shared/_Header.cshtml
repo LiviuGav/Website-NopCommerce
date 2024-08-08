@@ -1,0 +1,74 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></link>
+</head>
+
+
+<div class="header">
+    <a class="skip" href="#main">@T("Header.SkipNavigation.Text")</a>
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderBefore })
+    <div class="header-lower">
+        <p class="welcome">Welcome to Our store Multikart</p>
+        <i class="fa fa-phone" aria-hidden="true"></i>
+        <p class="habibi">Call Us: 123 - 456 - 7890</p>
+        <div class="cont-menu">
+            @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
+        </div>
+    </div>
+
+    <div class="header-upper">
+        <div class="header-logo">
+            @await Component.InvokeAsync(typeof(LogoViewComponent))
+        </div>
+        <div class="header-menu">
+            @await Component.InvokeAsync(typeof(TopMenuViewComponent))
+        </div>
+        <div class="search-lupa"> 
+            <button id="searchbutton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="selector">
+            <i class="fa-solid fa-earth-americas"></i>
+            <div class="header-selectors-wrapper">
+                @await Component.InvokeAsync(typeof(TaxTypeSelectorViewComponent))
+                @await Component.InvokeAsync(typeof(CurrencySelectorViewComponent))
+                @await Component.InvokeAsync(typeof(LanguageSelectorViewComponent))
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderSelectors })
+            </div>
+        </div>
+        <div class="header-links-wrapper">
+            @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
+            @await Component.InvokeAsync(typeof(FlyoutShoppingCartViewComponent))
+        </div>
+        <div class="header-gava">
+            <p>GAVA FASHION</p>
+        </div>
+        <div class="search-box store-search-box" id="searchBox">
+            @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
+            
+        </div>
+    </div>
+   
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMiddle })
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderAfter })
+</div>
+
+<script>
+    document.getElementById("searchbutton").addEventListener("click", function () {
+        var searchBox = document.getElementById("searchBox");
+        if (searchBox.classList.contains("visible")) {
+            searchBox.classList.remove("visible");
+            setTimeout(function () {
+                searchBox.style.display = "none";
+            }, 500); // Durata tranziției trebuie să corespundă cu durata din CSS
+        } else {
+            searchBox.style.display = "block";
+            setTimeout(function () {
+                searchBox.classList.add("visible");
+            }, 10); // Un mic delay pentru a permite browser-ului să aplice `display: block`
+        }
+    });
+
+</script>
