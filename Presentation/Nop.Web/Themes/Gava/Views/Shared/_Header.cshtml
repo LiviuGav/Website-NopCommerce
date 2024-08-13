@@ -42,12 +42,9 @@
             @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
             @await Component.InvokeAsync(typeof(FlyoutShoppingCartViewComponent))
         </div>
-        <div class="header-gava">
-            <p>GAVA FASHION</p>
-        </div>
         <div class="search-box store-search-box" id="searchBox">
+            <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
             @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
-            
         </div>
     </div>
    
@@ -58,17 +55,30 @@
 <script>
     document.getElementById("searchbutton").addEventListener("click", function () {
         var searchBox = document.getElementById("searchBox");
+
         if (searchBox.classList.contains("visible")) {
             searchBox.classList.remove("visible");
+            searchBox.classList.add("hidden");
             setTimeout(function () {
                 searchBox.style.display = "none";
-            }, 500); // Durata tranziției trebuie să corespundă cu durata din CSS
+            }, 500); 
         } else {
             searchBox.style.display = "block";
             setTimeout(function () {
+                searchBox.classList.remove("hidden");
                 searchBox.classList.add("visible");
-            }, 10); // Un mic delay pentru a permite browser-ului să aplice `display: block`
+            }, 10);
         }
     });
+
+    function closeSearch() {
+        var searchBox = document.getElementById('searchBox');
+
+        searchBox.classList.remove("visible");
+        searchBox.classList.add("hidden");
+        setTimeout(function () {
+            searchBox.style.display = "none";
+        }, 500); 
+    }
 
 </script>

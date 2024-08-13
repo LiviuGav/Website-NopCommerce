@@ -22,6 +22,12 @@
             @RenderSection("Breadcrumb") 
         }
         <div class="master-column-wrapper">
+            <div class="continut-slider" id="continut">
+                <h4 class="bun-venit">Welcome To Fashion</h4>
+               @*  <h1 class="Men">MEN FASHION</h1>
+                <h1 class="Women">WOMEN FASHION</h1> *@
+                <button class="bruh" id="buton">SHOP NOW</button>
+            </div>
             @RenderBody()
         </div>
         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ContentAfter })
@@ -30,3 +36,18 @@
 </div>
 @await Component.InvokeAsync(typeof(EuCookieLawViewComponent))
 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.BodyEndHtmlTagBefore })
+
+<script>
+  
+    function hideSliderOnClothingPage() {
+        if (window.location.pathname !== "/") {
+            document.getElementById("continut").style.display = "none";
+        }
+    }
+
+    document.getElementById("buton").addEventListener("click", function () {
+        window.location.href = "http://localhost:5000/clothing";
+    });
+
+    hideSliderOnClothingPage();
+</script>
