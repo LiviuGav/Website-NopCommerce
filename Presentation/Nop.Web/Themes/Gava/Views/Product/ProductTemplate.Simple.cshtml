@@ -90,6 +90,7 @@
                         @await Html.PartialAsync("_ProductDetailsPictures", Model)
                         <!--product videos-->
                         @await Html.PartialAsync("_ProductDetailsVideos", Model)
+
                     </div>
                     <div class="overview">
                         <div class="product-count">
@@ -190,18 +191,42 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="border-product">
+                            <div class="border-product" id="b1">
                                 <h6 class="product-title">Sales Ends In</h6>
                                 <div class="timer">
                                     <p id="demo">
-                                        <span id="days">0</span><span class="padding-l">:</span><span class="timer-cal">Days</span>
-                                        <span id="hours">0</span><span class="padding-l">:</span><span class="timer-cal">Hrs</span>
-                                        <span id="minutes">0</span><span class="padding-l">:</span><span class="timer-cal">Min</span>
-                                        <span id="seconds">0</span><span class="timer-cal">Sec</span>
+                                    <div class="days-counter">
+                                        <div class="zile">
+                                            <span id="days">0</span>
+                                            <span class="padding-l">:</span>
+                                        </div>
+                                        <div class="days"><span class="timer-cal">Days</span></div>
+                                    </div>
+                                    <div class="hours-counter">
+                                            <div class="ore">
+                                                <span id="hours">0</span>
+                                                <span class="padding-l">:</span>
+                                            </div>
+                                            <div class="hours"><span class="timer-cal">Hrs</span></div>
+                                    </div>
+                                    <div class="minutes-counter">
+                                            <div class="minute">
+                                                <span id="minutes">0</span>
+                                                <span class="padding-l">:</span>
+                                            </div>
+                                            <div class="minutes"><span class="timer-cal">Min</span></div>
+                                    </div>
+                                    <div class="seconds-counter">
+                                            <div class="secunde">
+                                                <span id="seconds">0</span>
+                                               
+                                            </div>
+                                            <div class="seconds"><span class="timer-cal">Sec</span></div>
+                                    </div>
                                     </p>
                                 </div>
                             </div>
-                            <div class="border-product">
+                            <div class="border-product" id="b2">
                                 <h6 class="product-title">shipping info</h6>
                                 <ul class="shipping-info">
                                     <li>100% Original Products</li>
@@ -212,9 +237,16 @@
                             </div>
 
                         }
+                        <div class="share">
+                        <h6 class="title">Share it</h6>
                         <!--compare, email a friend-->
                         @await Html.PartialAsync("_ShareButton", Model)
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
+                        </div>
+                        <div class="border-product" id="b3">
+                            <h6 class="product-title">100% secure payment</h6>
+                            <img src="~/icons/icons_0/payment.png" class="img-fluid mt-1" alt="">
+                        </div>
                     </div>
 
                     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsEssentialBottom, additionalData = Model })

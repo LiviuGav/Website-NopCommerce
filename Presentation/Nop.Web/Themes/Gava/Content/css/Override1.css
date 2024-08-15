@@ -1174,7 +1174,8 @@
 }
 
 :root .breadcrumb{
-
+    color:#222;
+padding-left:50px;
 
 }
 :root .sku
@@ -1309,6 +1310,8 @@
 }
 
 :root .overview .add-to-cart-button {
+  height: 37px;
+  width: 178px;
   position: relative;
   z-index: 1;
   background-color: #ff4c3b;
@@ -1393,7 +1396,7 @@
 }
 
 :root .overview-buttons {
-  padding-left: 170px;
+  padding-left: 185px;
   position: absolute;
   top: 0;
   margin: 0;
@@ -1401,11 +1404,12 @@
   z-index:0;
 }
 
-:root .overview .add-to-wishlist-button
-{
-    background-image:none;
-    color:#fff;
-    background-color:#ff4c3b;
+:root .overview .add-to-wishlist-button {
+  width: 142px;
+  height: 36px;
+  background-image: none;
+  color: #fff;
+  background-color: #ff4c3b;
 }
 
 :root #heart1.fa.fa-heart {
@@ -1435,13 +1439,13 @@
 
 :root .overview input[type="text"] {
  position:relative;
- left:20%;
+ left:19%;
 }
 :root .andrei {
   height: 36px;
   width: 35px;
   position: absolute;
-  left:47%;
+  left:43.5%;
   border:1px solid #ddd;
 }
 :root .emy {
@@ -1469,8 +1473,20 @@
 }
 
 :root .product-share-button {
-  margin-top: 20px;
+  margin-top: 5px;
 }
+:root .share {
+  border-bottom: 1px solid #ddd;
+  padding-top: 15px;
+  padding-bottom: 20px;
+}
+  :root .share h6 {
+    color: #222;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin-bottom: 3px;
+    font-size: 16px;
+  }
 
 :root .shipping-info li {
   display: block;
@@ -1488,10 +1504,56 @@
 }
 
 :root .timer {
+    color:#222;
+  display: inline-flex;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 40px;
   font-size: 18px;
   margin-top: 10px;
   background-color: #f7f7f7;
+}
+  :root .timer div {
+    margin-right:15px;
+  }
+
+  :root .timer .timer-cal {
+   font-size:10px;
+  }
+
+:root .hours .timer-cal, :root .minutes .timer-cal, :root .seconds .timer-cal {
+  margin-left: 3px;
+}
+
+  :root .timer .padding-l {
+    padding-left:10px;
+  }
+
+  :root #b1.border-product
+  {
+      padding-top:15px;
+      padding-bottom:20px;
+      border-top:1px solid #ddd;
+      border-bottom:1px solid #ddd;
+  }
+
+:root #b2.border-product {
+  padding-top: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+:root #b3.border-product {
+  padding-top: 15px;
+  padding-bottom: 20px;
+  
+}
+
+:root #b3.border-product .product-title {
+  margin-bottom:8px;
+}
+
+:root .product-tags-box
+{
+    display:none;
 }
