@@ -92,21 +92,39 @@
                         @await Html.PartialAsync("_ProductDetailsVideos", Model)
                     </div>
                     <div class="overview">
+                        <div class="product-count">
+                            <ul>
+                                <li>
+                                    <img src="~/icons/icons_0/fire.gif" class="img-fluid" alt="image">
+                                    <span class="p-counter">37</span>
+                                    <span class="lang">orders in last 24 hours</span>
+                                </li>
+                                <li>
+                                    <img src="~/icons/icons_0/person.gif" class="img-fluid user_img" alt="image">
+                                    <span class="p-counter">44</span>
+                                    <span class="lang">active view this</span>
+                                </li>
+                            </ul>
+                        </div>
                         @await Html.PartialAsync("_Discontinued", Model)
                         <div class="product-name">
                             <h1>
                                 @Model.Name
                             </h1>
                         </div>
-                        @if (!string.IsNullOrEmpty(Model.ShortDescription))
+                        @* @if (!string.IsNullOrEmpty(Model.ShortDescription))
                         {
                             <div class="short-description">
                                 @Html.Raw(Model.ShortDescription)
                             </div>
-                        }
+                        } *@
                         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
                         <!--product reviews-->
                         @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
+                        <div class="label-section">
+                            <span class="badge badge-grey-color">#1 Best seller</span>
+                            <span class="label-text">in fashion</span>
+                        </div>
                         <!--manufacturers-->
                         @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
                         <!--availability-->
@@ -137,6 +155,7 @@
                         }
                         <!--price & add to cart & estimate shipping-->
                         @{
+
                             var dataDictPrice = new ViewDataDictionary(ViewData);
                             dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductPriceTop, additionalData = Model })
@@ -147,22 +166,53 @@
 
                             var dataDictAddToCart = new ViewDataDictionary(ViewData);
                             dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                           
                             @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
+                            <!--wishlist-->
+                            <div class="overview-buttons">
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
+                                @{
+                                    var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+                                    dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                    @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                                }
+                                @await Html.PartialAsync("_CompareProductsButton", Model)
+                                @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+                            </div>
 
-                            @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
+                            
+                            <div class="product-count">
+                                <ul>
+                                    <li>
+                                        <img src="~/icons/icons_0/truck.png" class="img-fluid" alt="image">
+                                        <span class="lang">Free shipping for orders above $500 USD</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="border-product">
+                                <h6 class="product-title">Sales Ends In</h6>
+                                <div class="timer">
+                                    <p id="demo">
+                                        <span id="days">0</span><span class="padding-l">:</span><span class="timer-cal">Days</span>
+                                        <span id="hours">0</span><span class="padding-l">:</span><span class="timer-cal">Hrs</span>
+                                        <span id="minutes">0</span><span class="padding-l">:</span><span class="timer-cal">Min</span>
+                                        <span id="seconds">0</span><span class="timer-cal">Sec</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="border-product">
+                                <h6 class="product-title">shipping info</h6>
+                                <ul class="shipping-info">
+                                    <li>100% Original Products</li>
+                                    <li>Free Delivery on order above Rs. 799</li>
+                                    <li>Pay on delivery is available</li>
+                                    <li>Easy 30 days returns and exchanges</li>
+                                </ul>
+                            </div>
+
                         }
-                        <!--wishlist, compare, email a friend-->
-                        <div class="overview-buttons">
-                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
-                            @{
-                                var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
-                                dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
-                            }
-                            @await Html.PartialAsync("_CompareProductsButton", Model)
-                            @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
-                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
-                        </div>
+                        <!--compare, email a friend-->
                         @await Html.PartialAsync("_ShareButton", Model)
                         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
                     </div>
@@ -238,4 +288,55 @@
         selectedDiv.classList.add('apasat');
 
     }
+
+    // Curăță localStorage pentru a elimina timer-ul vechi
+    localStorage.removeItem('countDownDate');
+
+    // Verifică dacă există un timp de sfârșit salvat în localStorage
+    var savedEndTime = localStorage.getItem('countDownDate');
+
+    // Dacă nu există un timp salvat, setează timer-ul la 40 de ore de la momentul curent
+    if (!savedEndTime) {
+        var countDownDate = new Date().getTime() + (40 * 60 * 60 * 1000);
+        localStorage.setItem('countDownDate', countDownDate); // Salvează noul timp de sfârșit în localStorage
+    } else {
+        var countDownDate = parseInt(savedEndTime, 10);
+    }
+
+    // Actualizează timer-ul în fiecare secundă
+    var x = setInterval(function () {
+
+        // Obține data și ora curentă
+        var now = new Date().getTime();
+
+        // Calculează diferența de timp între data curentă și timpul limită
+        var distance = countDownDate - now;
+
+        // Calculează zilele, orele, minutele și secundele rămase
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Ajustează zilele și orele pentru a afișa timpul dorit
+        if (hours > 0) {
+            days += 1; // Adaugă o zi suplimentară
+        }
+
+        // Afișează rezultatele în elementele cu id-urile respective
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours; // Afișează orele rămase
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+
+        // Dacă timer-ul a expirat, afișează un mesaj și resetează localStorage
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").textContent = "EXPIRED";
+            localStorage.removeItem('countDownDate'); // Resetează timer-ul pentru următoarea deschidere
+        }
+    }, 1000);
+
+
+
 </script>
